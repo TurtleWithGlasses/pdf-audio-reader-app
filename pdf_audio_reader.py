@@ -4,6 +4,20 @@ import PyPDF2
 import pyttsx3
 
 
+def extract_text():
+    file = filedialog.askopenfile(parent=root, mode="rb", title="Choose a PDF file")
+    if file != None:
+        pdfreader = PyPDF2.PdfFileReader(file)
+        global text_extracted
+        text_extracted = ""
+        for page_num in range(pdfreader.numPages):
+            page_object = pdfreader.getPage(page_num)
+            text_extracted += page_object.extract_text()
+        file.close()
+
+
+
+
 def Application(root):
     root.geometry("{}x{}".format(700, 600))
     root.resizable(width=False, height=False)
@@ -53,6 +67,3 @@ if __name__ == "__main__":
     root = Tk()
     Application(root)
     root.mainloop()
-
-
-
