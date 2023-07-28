@@ -15,7 +15,29 @@ def extract_text():
             text_extracted += page_object.extract_text()
         file.close()
 
+def speak_text():
+    global rate
+    global male
+    global female
+    rate = int(rate.get())
+    engine.setProperty("rate", rate)
+    male = int(male.get())
+    female = int(female.get())
+    all_voices = engine.getProperty("voices")
+    male_voice = all_voices[0].id
+    female_voice = all_voices[1].id
+    if male == 0 and female == 0 or male == 1 and female == 1:
+        engine.setProperty("voice", male_voice)
+    elif male == 0 and female == 1:
+        engine.setProperty("voice", female_voice)
+    else:
+        engine.setProperty("voice", male_voice)
+    engine.say(text_extracted)
+    engine.runAndWait()
 
+
+def stop_speaking():
+    engine.stop()
 
 
 def Application(root):
